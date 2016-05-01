@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>JSONP</title>
+    <link rel="stylesheet" href="main.css">
+  </head>
+  <body>
+
+    <input id="button" type="button" onclick="getPrice('http://api.money.126.net/data/feed/0000001,1399001,0600054,0600537?callback=refreshPrice')" value="请求JSON">
+    <textarea id="response-json" rows="8" readonly="readonly"> </textarea>
+
+
+    <script>
+
+      'use strict';
+
+      function getPrice(url) {
+          var script = document.createElement('script');
+          var head = document.getElementsByTagName('head')[0];
+          head.appendChild(script);
+          script.src = url;
+          //head.removeChild(script);
+          //setInterval( getPrice(script.src),3000 );
+      }
+
+      function refreshPrice(data) {
+        var p = document.getElementById('response-json');
+        p.value = data['0000001'].name +' : ' +data['0000001'].price + '\n\n' +
+                  data['1399001'].name + ' : ' +data['1399001'].price + '\n\n' +
+                  data['0600054'].name +' : ' +data['0600054'].price + '\n\n' +
+                  data['0600537'].name +' : ' +data['0600537'].price;
+      }
+
+    </script>
+  </body>
+</html>
